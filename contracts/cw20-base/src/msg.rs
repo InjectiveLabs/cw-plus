@@ -6,6 +6,8 @@ use serde::{Deserialize, Serialize};
 
 pub use cw20::Cw20ExecuteMsg as ExecuteMsg;
 
+use crate::state::MinterData;
+
 #[cw_serde]
 pub struct InstantiateMarketingInfo {
     pub project: Option<String>,
@@ -21,7 +23,7 @@ pub struct InstantiateMsg {
     pub symbol: String,
     pub decimals: u8,
     pub initial_balances: Vec<Cw20Coin>,
-    pub mint: Option<MinterResponse>,
+    pub mint: Option<MinterData>,
     pub marketing: Option<InstantiateMarketingInfo>,
 }
 

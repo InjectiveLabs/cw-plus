@@ -44,3 +44,6 @@ overflow-checks = true
 opt-level = 3
 debug = false
 debug-assertions = false
+
+[patch.crates-io]
+injective-cosmwasm = { path = "../cw-injective/packages/injective-cosmwasm" }

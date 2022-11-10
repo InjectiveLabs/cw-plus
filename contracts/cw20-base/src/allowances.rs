@@ -3,6 +3,7 @@ use cosmwasm_std::{
     Storage, Uint128,
 };
 use cw20::{AllowanceResponse, Cw20ReceiveMsg, Expiration};
+use injective_cosmwasm::InjectiveMsgWrapper;
 
 use crate::error::ContractError;
 use crate::state::{ALLOWANCES, ALLOWANCES_SPENDER, BALANCES, TOKEN_INFO};
@@ -14,7 +15,7 @@ pub fn execute_increase_allowance(
     spender: String,
     amount: Uint128,
     expires: Option<Expiration>,
-) -> Result<Response, ContractError> {
+) -> Result<Response<InjectiveMsgWrapper>, ContractError> {
     let spender_addr = deps.api.addr_validate(&spender)?;
     if spender_addr == info.sender {
         return Err(ContractError::CannotSetOwnAccount {});
@@ -50,7 +51,7 @@ pub fn execute_decrease_allowance(
     spender: String,
     amount: Uint128,
     expires: Option<Expiration>,
-) -> Result<Response, ContractError> {
+) -> Result<Response<InjectiveMsgWrapper>, ContractError> {
     let spender_addr = deps.api.addr_validate(&spender)?;
     if spender_addr == info.sender {
         return Err(ContractError::CannotSetOwnAccount {});
@@ -128,7 +129,7 @@ pub fn execute_transfer_from(
     owner: String,
     recipient: String,
     amount: Uint128,
-) -> Result<Response, ContractError> {
+) -> Result<Response<InjectiveMsgWrapper>, ContractError> {
     let rcpt_addr = deps.api.addr_validate(&recipient)?;
     let owner_addr = deps.api.addr_validate(&owner)?;
 
@@ -165,7 +166,7 @@ pub fn execute_burn_from(
     info: MessageInfo,
     owner: String,
     amount: Uint128,
-) -> Result<Response, ContractError> {
+) -> Result<Response<InjectiveMsgWrapper>, ContractError> {
     let owner_addr = deps.api.addr_validate(&owner)?;
 
     // deduct allowance before doing anything else have enough allowance
@@ -202,7 +203,7 @@ pub fn execute_send_from(
     contract: String,
     amount: Uint128,
     msg: Binary,
-) -> Result<Response, ContractError> {
+) -> Result<Response<InjectiveMsgWrapper>, ContractError> {
     let rcpt_addr = deps.api.addr_validate(&contract)?;
     let owner_addr = deps.api.addr_validate(&owner)?;
 
